@@ -1,7 +1,8 @@
 public class Player {
     private final String name;
-    private final IInputStrategy inputStrategy;
+    private IInputStrategy inputStrategy;
     private int score;
+    private CopyInput copyInput;
 
     public Player(String name, IInputStrategy inputStrategy) {
         this.name = name;
@@ -23,6 +24,18 @@ public class Player {
     }
 
     public ValidInput generateInput(){
-        return inputStrategy.getInput();
+        ValidInput input = inputStrategy.getInput();
+        storeInput(input);
+        return input;
+    }
+
+    public void storeInput(ValidInput input) {
+        if(copyInput != null) {
+            copyInput.storeInput(input);
+        }
+    }
+
+    public void register(CopyInput copyInput) {
+        this.copyInput = copyInput;
     }
 }
